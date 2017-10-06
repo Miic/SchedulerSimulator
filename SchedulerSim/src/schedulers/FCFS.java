@@ -35,5 +35,10 @@ public class FCFS implements Scheduler {
 			queue.add(i);
 		}
 	}
+
+	@Override
+	public int size() {
+		return queue.size();
+	}
 		
 }

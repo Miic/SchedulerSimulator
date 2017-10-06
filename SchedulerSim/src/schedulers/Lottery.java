@@ -42,6 +42,7 @@ public class Lottery implements Scheduler {
 					if (queue.get(i).getTickets() < (r.nextInt(lotteryTickets-1) + 1)) {
 						queue.get(i).setQuantum(queue.get(i).getQuantum() + quantum);
 						if (queue.get(i).getQuantum() >= queue.get(i).getBurst_time()) {
+							lotteryTickets -= queue.get(i).getTickets();
 							return queue.remove(i);
 						}
 						flag = true;
@@ -65,6 +66,11 @@ public class Lottery implements Scheduler {
 	
 	public int getTotalLotteryTickets() {
 		return lotteryTickets;
+	}
+
+	@Override
+	public int size() {
+		return queue.size();
 	}
 
 }

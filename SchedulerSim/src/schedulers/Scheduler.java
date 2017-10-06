@@ -8,4 +8,5 @@ public interface Scheduler {
 	public Process peek();
 	public Process pop();
 	public void addProcesses(List<Process> process);
+	public int size();
 }

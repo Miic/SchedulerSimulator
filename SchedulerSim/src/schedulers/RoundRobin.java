@@ -51,4 +51,9 @@ public class RoundRobin implements Scheduler {
 	public void addProcesses(List<Process> process) {
 		queue = process;
 	}
+
+	@Override
+	public int size() {
+		return queue.size();
+	}
 }

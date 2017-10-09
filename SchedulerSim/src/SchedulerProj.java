@@ -13,7 +13,8 @@ public class SchedulerProj {
 		ProcessCreationSim in;
 		try {
 			scheduler = new FCFS();
-			sim = new SchedulerSim(scheduler);
+			sim = new SchedulerSim(scheduler, 3);
+			sim.verbose(true);
 			in = new ProcessCreationSim(new File("input.txt"));
 			in.run();
 			scheduler.addProcesses(in.getList());

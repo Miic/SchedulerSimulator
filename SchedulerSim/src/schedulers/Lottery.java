@@ -33,7 +33,7 @@ public class Lottery implements Scheduler {
 	}
 
 	@Override
-	public Process pop() {
+	public int pop() {
 		if (queue.size() > 0) {
 			Random r = new Random();
 			boolean flag = false;
@@ -43,7 +43,7 @@ public class Lottery implements Scheduler {
 						queue.get(i).setQuantum(queue.get(i).getQuantum() + quantum);
 						if (queue.get(i).getQuantum() >= queue.get(i).getBurst_time()) {
 							lotteryTickets -= queue.get(i).getTickets();
-							return queue.remove(i);
+							return queue.remove(i).getBurst_time();
 						}
 						flag = true;
 						break;
@@ -51,7 +51,7 @@ public class Lottery implements Scheduler {
 				}
 			} while (flag == false);
 		}
-		return null;
+		return 0;
 	}
 	
 	@Override

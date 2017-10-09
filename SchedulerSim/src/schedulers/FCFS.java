@@ -1,6 +1,7 @@
 package schedulers;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -9,9 +10,8 @@ import Process.Process;
 public class FCFS implements Scheduler {
 	private Queue<Process> queue;
 	
-	@SuppressWarnings("unchecked")
 	public FCFS() {
-		queue = (Queue<Process>) new ArrayList<Process>();
+		queue = new LinkedList<Process>();
 	}
 
 	@Override
@@ -25,8 +25,8 @@ public class FCFS implements Scheduler {
 	}
 
 	@Override
-	public Process pop() {
-		return queue.poll();
+	public int pop() {
+		return queue.poll().getBurst_time();
 	}
 
 	@Override

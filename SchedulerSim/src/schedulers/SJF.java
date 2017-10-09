@@ -24,8 +24,8 @@ public class SJF implements Scheduler {
 	}
 
 	@Override
-	public Process pop() {
-		return queue.poll();
+	public int pop() {
+		return queue.poll().getBurst_time();
 	}
 	
 	@Override

@@ -29,18 +29,18 @@ public class RoundRobin implements Scheduler {
 	}
 
 	@Override
-	public Process pop() {
+	public int pop() {
 		if (queue.size() > 0) {
 			Process object = queue.get(0);
 			object.setQuantum(object.getQuantum() + quantum);
 			if (object.getQuantum() >= object.getBurst_time()) {
-				return queue.remove(0);
+				return queue.remove(0).getBurst_time();
 			}
 			//loop it to the back
 			queue.add(queue.remove(0));
-			return object;
+			return quantum;
 		}
-		return null;
+		return 0;
 	}
 	
 	public int getQuantum() {

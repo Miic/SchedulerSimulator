@@ -43,7 +43,7 @@ public class SchedulerSim implements Simulation {
 		}
 		if (verbose) {
 			System.out.println("\n<-> Ended Simulation\n\n    Total Time Quanta Taken: " + timeTaken);
-			System.out.println("    Average Time Quanta Taken: " + ((float)timeTaken/total));
+			System.out.println("    Average Time Quanta Taken: " + ((float)timeTaken/total) + "\n");
 		}
 	}
 

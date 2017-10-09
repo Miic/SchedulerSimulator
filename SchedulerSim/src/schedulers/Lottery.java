@@ -31,7 +31,7 @@ public class Lottery implements Scheduler {
 		Random r = new Random();
 		while (queue.size() > 0) {
 			for(int i = 0; i < queue.size(); i++) {
-				if (queue.get(i).getPriority() >= (r.nextInt(lotteryTickets-1) + 1)) {
+				if (queue.get(i).getPriority() >= (r.nextInt(lotteryTickets) + 1)) {
 					peekedEntry = queue.get(i);
 					return peekedEntry;
 				}

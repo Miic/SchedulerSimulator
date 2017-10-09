@@ -6,14 +6,12 @@ public class Process {
 	private int burst_time;
 	private int priority;
 	private int quantum;
-	private int tickets;
 	
 	public Process(int pid, int burst_time, int priority) {
 		this.pid = pid;
 		this.burst_time = burst_time;
 		this.priority = priority;
 		this.quantum = 0;
-		this.tickets = 0;
 	}
 	
 	public int getPid() {
@@ -43,11 +41,5 @@ public class Process {
 	}
 	public boolean isCompleted() {
 		return (quantum >= burst_time);
-	}
-	public void setTickets(int tickets) {
-		this.tickets = tickets;
-	}
-	public int getTickets() {
-		return tickets;
 	}
 }

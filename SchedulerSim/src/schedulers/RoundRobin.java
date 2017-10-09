@@ -32,9 +32,10 @@ public class RoundRobin implements Scheduler {
 	public int pop() {
 		if (queue.size() > 0) {
 			Process object = queue.get(0);
+			int pastQuantum = object.getQuantum();
 			object.setQuantum(object.getQuantum() + quantum);
 			if (object.getQuantum() >= object.getBurst_time()) {
-				return queue.remove(0).getBurst_time();
+				return queue.remove(0).getBurst_time() - pastQuantum;
 			}
 			//loop it to the back
 			queue.add(queue.remove(0));

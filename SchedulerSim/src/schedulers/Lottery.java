@@ -11,23 +11,31 @@ public class Lottery implements Scheduler {
 	private List<Process> queue;
 	private int lotteryTickets;
 	private int quantum;
+	private Process peekedEntry;
 	
 	public Lottery(int quantum) {
 		queue = new ArrayList<Process>();
 		lotteryTickets = 0;
 		this.quantum = quantum;
+		peekedEntry = null;
 	}
 	
 	@Override
 	public void scheduleProcess(Process process) {
 		queue.add(process);
-		lotteryTickets += process.getTickets();
+		lotteryTickets += process.getPriority();
 	}
 
 	@Override
 	public Process peek() {
-		if (queue.size() > 0) {
-			return queue.get(0);
+		Random r = new Random();
+		while (queue.size() > 0) {
+			for(int i = 0; i < queue.size(); i++) {
+				if (queue.get(i).getPriority() >= (r.nextInt(lotteryTickets-1) + 1)) {
+					peekedEntry = queue.get(i);
+					return peekedEntry;
+				}
+			}
 		}
 		return null;
 	}
@@ -35,21 +43,19 @@ public class Lottery implements Scheduler {
 	@Override
 	public int pop() {
 		if (queue.size() > 0) {
-			Random r = new Random();
-			boolean flag = false;
-			do {
-				for(int i = 0; i < queue.size(); i++) {
-					if (queue.get(i).getTickets() < (r.nextInt(lotteryTickets-1) + 1)) {
-						queue.get(i).setQuantum(queue.get(i).getQuantum() + quantum);
-						if (queue.get(i).getQuantum() >= queue.get(i).getBurst_time()) {
-							lotteryTickets -= queue.get(i).getTickets();
-							return queue.remove(i).getBurst_time();
-						}
-						flag = true;
-						break;
-					}
-				}
-			} while (flag == false);
+			if (peekedEntry == null) {
+				peek();
+			}
+			int pastQuantum = peekedEntry.getQuantum();
+			peekedEntry.setQuantum(peekedEntry.getQuantum() + quantum);
+			if (peekedEntry.getQuantum() >= peekedEntry.getBurst_time()) {
+				lotteryTickets -= peekedEntry.getPriority();
+				queue.remove(peekedEntry);
+				return peekedEntry.getBurst_time() - pastQuantum;
+			}
+			Process temp = peekedEntry;
+			peekedEntry = null;
+			return temp.getQuantum() - pastQuantum;
 		}
 		return 0;
 	}
@@ -57,7 +63,10 @@ public class Lottery implements Scheduler {
 	@Override
 	public void addProcesses(List<Process> process) {
 		queue = process;
-		
+		lotteryTickets = 0;
+		for(int i = 0; i < process.size(); i++) {
+			lotteryTickets += process.get(i).getPriority(); 
+		}
 	}
 	
 	public int getQuantum() {

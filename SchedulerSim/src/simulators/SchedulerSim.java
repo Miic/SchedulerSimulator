@@ -22,26 +22,28 @@ public class SchedulerSim implements Simulation {
 	public void run() {
 		int timeTaken = 0;
 		int timeAdded = 0;
+		float total = scheduler.size();
 		Process process = null;
 		if (verbose) {
-			System.out.println("<+> Beginning Simulation");
+			System.out.println("<+> Beginning Simulation\n");
 		}
 		while (scheduler.size() > 0) {
 			if (process != null && process.getPid() != scheduler.peek().getPid()) {
 				timeTaken += switchOutTime;
 				if (verbose) {
-					System.out.println("  Switching Process: +" + switchOutTime);
+					System.out.println("  Cycle " + timeTaken + ": [Switching Processes] : +" + switchOutTime);
 				}
 			}
 			process = scheduler.peek();
 			timeAdded = scheduler.pop();
 			timeTaken += timeAdded;
 			if (verbose) {
-				System.out.println("  PID >" + process.getPid() + " : +" + timeAdded);
+				System.out.println("  Cycle " + timeTaken + ": [PID " + process.getPid() + "] : +" + timeAdded);
 			}
 		}
 		if (verbose) {
-			System.out.println("<-> Ended Simulation\n    Total Time Quanta Taken: " + timeTaken);
+			System.out.println("\n<-> Ended Simulation\n\n    Total Time Quanta Taken: " + timeTaken);
+			System.out.println("    Average Time Quanta Taken: " + ((float)timeTaken/total));
 		}
 	}
 

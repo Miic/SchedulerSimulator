@@ -18,7 +18,7 @@ public class SchedulerProj {
 		while (true) {
 			do {
 				System.out.println("==== [ Scheduler Simulator ] ====\n\n Step 1> Have an input.txt in the proper process format in the local directory\n Step 2> Select a Scheduler to begin Simulation\n");
-				System.out.println("  1) FCFS\n  2) SJF\n  3) RR,Q=25\n  4) RR,Q=50\n  5) L,Q=60\n 0) Exit");
+				System.out.println("  1) FCFS\n  2) SJF\n  3) RR,Q=25\n  4) RR,Q=50\n  5) L,Q=60\n  0) Exit");
 				System.out.print("\nEnter option: ");
 				
 				try {
@@ -53,7 +53,7 @@ public class SchedulerProj {
 					continue;
 				}
 			
-			} while (input > 5 || input < 1);
+			} while (input > 5 || input < 0);
 			try {
 				sim = new SchedulerSim(scheduler, 3);
 				sim.verbose(true);

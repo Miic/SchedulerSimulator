@@ -17,7 +17,7 @@ public class RoundRobin implements Scheduler {
 
 	@Override
 	public void scheduleProcess(Process process) {
-		queue.add(process);
+		queue.add(process.clone());
 	}
 
 	@Override
@@ -50,7 +50,11 @@ public class RoundRobin implements Scheduler {
 
 	@Override
 	public void addProcesses(List<Process> process) {
-		queue = process;
+		queue = new ArrayList<Process>();
+		for (Process i : process) {
+			queue.add(i.clone());
+		}
+		
 	}
 
 	@Override

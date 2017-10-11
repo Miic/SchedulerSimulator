@@ -42,4 +42,9 @@ public class Process {
 	public boolean isCompleted() {
 		return (quantum >= burst_time);
 	}
+	public Process clone() {
+		Process returnable = new Process(pid, burst_time, priority);
+		returnable.quantum = this.quantum;
+		return returnable;
+	}
 }

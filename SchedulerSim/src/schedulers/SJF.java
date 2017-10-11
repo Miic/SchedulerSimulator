@@ -30,8 +30,9 @@ public class SJF implements Scheduler {
 	
 	@Override
 	public void addProcesses(List<Process> process) {
+		queue = new PriorityQueue<Process>(10, new BurstTimeComparator());
 		for(Process i : process) {
-			queue.add(i);
+			queue.add(i.clone());
 		}
 	}
 

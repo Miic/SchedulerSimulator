@@ -57,6 +57,7 @@ public class SchedulerProj {
 			try {
 				sim = new SchedulerSim(scheduler, 3);
 				sim.verbose(true);
+				sim.printable(true);
 				in = new ProcessCreationSim(new File("input.txt"));
 				in.verbose(true);
 				System.out.println();

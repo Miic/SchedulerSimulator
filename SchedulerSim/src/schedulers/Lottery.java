@@ -22,8 +22,17 @@ public class Lottery implements Scheduler {
 	
 	@Override
 	public void scheduleProcess(Process process) {
-		queue.add(process);
 		lotteryTickets += process.getPriority();
+		if (queue.size() == 0) {
+			queue.add(process.clone());
+		} else {
+			for (int i = 0; i < queue.size(); i++) {
+				if (process.getPriority() < queue.get(i).getPriority()) {
+					queue.add(i, process.clone());
+					break;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -51,7 +60,9 @@ public class Lottery implements Scheduler {
 			if (peekedEntry.getQuantum() >= peekedEntry.getBurst_time()) {
 				lotteryTickets -= peekedEntry.getPriority();
 				queue.remove(peekedEntry);
-				return peekedEntry.getBurst_time() - pastQuantum;
+				Process temp = peekedEntry;
+				peekedEntry = null;
+				return temp.getBurst_time() - pastQuantum;
 			}
 			Process temp = peekedEntry;
 			peekedEntry = null;
@@ -62,10 +73,22 @@ public class Lottery implements Scheduler {
 	
 	@Override
 	public void addProcesses(List<Process> process) {
-		queue = process;
+		queue = new ArrayList<Process>();
 		lotteryTickets = 0;
+		Process holder = null;
 		for(int i = 0; i < process.size(); i++) {
-			lotteryTickets += process.get(i).getPriority(); 
+			holder = process.get(i).clone();
+			lotteryTickets += process.get(i).getPriority();
+			if (queue.size() > 0) {
+				for(int j = 0; j < queue.size(); j++) {
+					if (holder.getPriority() < queue.get(j).getPriority()) {
+						queue.add(j, holder);
+						break;
+					}
+				}
+			} else {
+				queue.add(holder);
+			}
 		}
 	}
 	

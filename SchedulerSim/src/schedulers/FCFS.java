@@ -30,8 +30,9 @@ public class FCFS implements Scheduler {
 
 	@Override
 	public void addProcesses(List<Process> process) {
+		queue = new LinkedList<Process>();
 		for(Process i : process) {
-			queue.add(i);
+			queue.add(i.clone());
 		}
 	}
 

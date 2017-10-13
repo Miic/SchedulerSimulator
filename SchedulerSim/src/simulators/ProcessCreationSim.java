@@ -21,10 +21,14 @@ public class ProcessCreationSim implements Simulation {
 	@Override
 	public void run() {
 		while (in.hasNextInt()) {
-			Process adding = new Process(in.nextInt(), in.nextInt(), in.nextInt());
-			processes.add(adding);
-			if (verbose) {
-				System.out.println("Created Process w/ PID: " + adding.getPid() + ",BurstTime: " + adding.getBurst_time() + ",Priority: " + adding.getPriority());
+			try {
+				Process adding = new Process(in.nextInt(), in.nextInt(), in.nextInt());
+				processes.add(adding);
+				if (verbose) {
+					System.out.println("Created Process w/ PID: " + adding.getPid() + ",BurstTime: " + adding.getBurst_time() + ",Priority: " + adding.getPriority());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
